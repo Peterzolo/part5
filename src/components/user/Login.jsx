@@ -9,6 +9,7 @@ const initialState = {
 
 const Login = () => {
   const [formData, setFormData] = useState(initialState);
+  const { username, password } = formData;
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -29,7 +30,7 @@ const Login = () => {
         <label htmlFor="username">Username</label>
         <input
           type="text"
-          value={"username"}
+          value={username}
           className="form-input"
           name="username"
           onChange={handleChange}
