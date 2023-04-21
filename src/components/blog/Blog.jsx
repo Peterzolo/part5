@@ -21,7 +21,7 @@ const Blog = ({ user, setLoggedIn }) => {
   return (
     <div className="blog-wrapper">
       <div className="user-logout">
-        <p className="desc">You are logged in as {user.username}</p>
+        <p className="desc">You are logged in as {user.name}</p>
         <button type="button" onClick={handleLogout} className="logout-btn">
           Logout
         </button>

@@ -50,7 +50,6 @@ const LoginForm = () => {
         ) : (
           <ErrorNotification message={errorMessage} />
         )}
-
         <label>Username</label>
         <input
           className="form-input"
