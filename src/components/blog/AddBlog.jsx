@@ -36,7 +36,7 @@ const AddBlog = () => {
         setSuccessMessage("Blog successfully added");
         setTimeout(() => {
           setSuccessMessage(null);
-        }, 5000);
+        }, 1000);
         setAuthor("");
         setTitle("");
         setUrl("");
@@ -44,7 +44,7 @@ const AddBlog = () => {
         setErrorMessage("Could not add blog");
         setTimeout(() => {
           setErrorMessage(null);
-        }, 5000);
+        }, 1000);
       }
     } catch (error) {
       setErrorMessage(error);
