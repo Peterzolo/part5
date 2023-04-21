@@ -2,10 +2,19 @@ import axios from "axios";
 
 const baseUrl = "http://localhost:5000/api/blogs";
 
+let token = null;
+
+export const setToken = (newToken) => {
+  token = `Bearer ${newToken}`;
+  console.log("TOKEN;;", token);
+};
+
 export const addBlog = async (blogObject) => {
-  const response = await axios.post(baseUrl, blogObject, {
-    headers: { "Content-Type": "Application/json" },
-  });
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.post(baseUrl, blogObject, config);
 
   return response.data.result;
 };

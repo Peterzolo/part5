@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { addBlog } from "../../services/blog.service";
+import React, { useEffect, useState } from "react";
+import { addBlog, setToken } from "../../services/blog.service";
 
 const AddBlog = () => {
   const [successMessage, setSuccessMessage] = useState(null);
@@ -7,24 +7,19 @@ const AddBlog = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
+  const [user, setUser] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const newBlogObject = {
-        title,
-        author,
-        url,
+        title: title,
+        author: title,
+        url: url,
       };
 
       const response = await addBlog(newBlogObject);
-      if (response) {
-        setSuccessMessage("Blog successfully added");
-        setTimeout(() => {
-          setSuccessMessage(null);
-        }, 5000);
-      }
     } catch (error) {
       setErrorMessage(error);
       setTimeout(() => {
@@ -32,6 +27,15 @@ const AddBlog = () => {
       }, 5000);
     }
   };
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem("user");
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
+      setToken(user.token);
+    }
+  }, []);
 
   return (
     <div className="add-blog-wrapper">

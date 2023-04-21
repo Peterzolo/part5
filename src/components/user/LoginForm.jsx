@@ -4,6 +4,7 @@ import ErrorNotification from "../notification/ErrorNotification";
 
 import "../../components/user/LoginForm.css";
 import { userLogIn } from "../../services/user.service";
+import { setToken } from "../../services/blog.service";
 
 const LoginForm = () => {
   const [successMessage, setSuccessMessage] = useState(null);
@@ -11,6 +12,7 @@ const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
+  console.log("settt user", user);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -22,10 +24,15 @@ const LoginForm = () => {
       };
 
       const user = await userLogIn(userObject);
+      console.log("++++++USER", user);
 
       if (user) {
+        window.localStorage.setItem("user", JSON.stringify(user));
+        const token = JSON.parse(localStorage.getItem("user")).token;
+        setToken(token);
+        console.log("USER TOKEN", token);
         setUser(user);
-        localStorage.setItem("user", JSON.stringify(user));
+
         setSuccessMessage("User Logged in successfully");
         setTimeout(() => {
           setSuccessMessage("");

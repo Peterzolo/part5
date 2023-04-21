@@ -33,7 +33,9 @@ const Blog = ({ user, setLoggedIn }) => {
           blogs.map((blog) => (
             <div key={blog.id}>
               <ul className="blog-body">
-                <li className="blog-list">{blog.title}</li>
+                <li className="blog-list">
+                  <h3>{blog.title}</h3>{" "}
+                </li>
               </ul>
             </div>
           ))}
