@@ -10,11 +10,6 @@ export const create = (newObject) => {
     });
 };
 
-export const userLogIn = async (userObject) => {
-  const response = await axios.post(baseUrl, userObject);
-  return response.data;
-};
-
 export const getAll = () => {
   const request = axios.get(baseUrl);
   return request;

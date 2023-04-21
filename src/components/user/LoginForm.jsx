@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { userLogIn } from "./service";
+import React, { useEffect, useState } from "react";
 import Notification from "../notification/Notification";
 import ErrorNotification from "../notification/ErrorNotification";
 
 import "../../components/user/LoginForm.css";
+import { userLogIn } from "../../services/user.service";
 
 const LoginForm = () => {
   const [successMessage, setSuccessMessage] = useState(null);
@@ -14,24 +14,29 @@ const LoginForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const userObject = {
-      username: username,
-      password: password,
-    };
-    const user = await userLogIn(userObject);
 
-    setUser(user);
-    setSuccessMessage("User Logged in successfully");
-    setTimeout(() => {
-      setSuccessMessage("");
-    }, 10000);
-    setUsername("");
-    setPassword("");
     try {
-    } catch (error) {
-      setErrorMessage("Wrong credentials");
+      const userObject = {
+        username: username,
+        password: password,
+      };
+
+      const user = await userLogIn(userObject);
+
+      if (user) {
+        setUser(user);
+        localStorage.setItem("user", JSON.stringify(user));
+        setSuccessMessage("User Logged in successfully");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 1000);
+        setUsername("");
+        setPassword("");
+      }
+    } catch (exception) {
+      setErrorMessage("Invalid credential");
       setTimeout(() => {
-        setErrorMessage(error.response.data.error);
+        setErrorMessage(null);
       }, 10000);
     }
   };
@@ -45,6 +50,7 @@ const LoginForm = () => {
         ) : (
           <ErrorNotification message={errorMessage} />
         )}
+
         <label>Username</label>
         <input
           className="form-input"
