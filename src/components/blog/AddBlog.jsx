@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { addBlog, setToken } from "../../services/blog.service";
+import { addBlog, createBlog, setToken } from "../../services/blog.service";
+import Notification from "../notification/Notification";
+import ErrorNotification from "../notification/ErrorNotification";
 
 const AddBlog = () => {
   const [successMessage, setSuccessMessage] = useState(null);
@@ -8,7 +10,6 @@ const AddBlog = () => {
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
   const [user, setUser] = useState("");
-  const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("user");
@@ -29,18 +30,21 @@ const AddBlog = () => {
         url: url,
       };
 
-      const response = await addBlog(newBlogObject);
+      const response = await createBlog(newBlogObject);
+
       if (response) {
-        setSuccessMessage("Blog added");
-        setBlogs(blogs.concat(response));
+        setSuccessMessage("Blog successfully added");
         setTimeout(() => {
           setSuccessMessage(null);
         }, 5000);
+        setAuthor("");
+        setTitle("");
+        setUrl("");
       } else {
         setErrorMessage("Could not add blog");
         setTimeout(() => {
           setErrorMessage(null);
-        }, []);
+        }, 5000);
       }
     } catch (error) {
       setErrorMessage(error);
@@ -52,6 +56,11 @@ const AddBlog = () => {
 
   return (
     <div className="add-blog-wrapper">
+      {successMessage ? (
+        <Notification message={successMessage} />
+      ) : (
+        <ErrorNotification message={errorMessage} />
+      )}
       <h2 className="create-blog-title">Creat A Blog</h2>
       <form className="form-wrap" onSubmit={handleSubmit}>
         <input

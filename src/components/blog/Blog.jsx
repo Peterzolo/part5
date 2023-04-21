@@ -5,9 +5,13 @@ import AddBlog from "./AddBlog";
 
 const Blog = ({ user, setLoggedIn }) => {
   const [blogs, setBlogs] = useState([]);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+
   useEffect(() => {
     async function fetchData() {
       const response = await getAllBlogs();
+
       setBlogs(response);
     }
     fetchData();

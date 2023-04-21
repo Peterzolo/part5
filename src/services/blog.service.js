@@ -9,13 +9,34 @@ export const setToken = (newToken) => {
 };
 
 export const addBlog = async (blogObject) => {
-  const config = {
-    headers: { Authorization: token },
-  };
+  try {
+    const config = {
+      headers: { Authorization: token },
+    };
 
-  const response = await axios.post(baseUrl, blogObject, config);
+    const response = await axios.post(baseUrl, blogObject, config);
+    console.log("GOT HERE");
 
-  return response.data.result;
+    return response.data.result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const createBlog = async (blogPostData) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const bearerToken = `Bearer ${user.token}`;
+
+  try {
+    const response = await axios.post(baseUrl, blogPostData, {
+      headers: {
+        Authorization: bearerToken,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const getAllBlogs = async () => {
