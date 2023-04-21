@@ -6,7 +6,6 @@ let token = null;
 
 export const setToken = (newToken) => {
   token = `Bearer ${newToken}`;
-  console.log("TOKEN;;", token);
 };
 
 export const addBlog = async (blogObject) => {

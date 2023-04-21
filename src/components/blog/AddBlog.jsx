@@ -8,6 +8,16 @@ const AddBlog = () => {
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
   const [user, setUser] = useState("");
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem("user");
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
+      setToken(user.token);
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,6 +30,18 @@ const AddBlog = () => {
       };
 
       const response = await addBlog(newBlogObject);
+      if (response) {
+        setSuccessMessage("Blog added");
+        setBlogs(blogs.concat(response));
+        setTimeout(() => {
+          setSuccessMessage(null);
+        }, 5000);
+      } else {
+        setErrorMessage("Could not add blog");
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, []);
+      }
     } catch (error) {
       setErrorMessage(error);
       setTimeout(() => {
@@ -27,15 +49,6 @@ const AddBlog = () => {
       }, 5000);
     }
   };
-
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem("user");
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON);
-      setUser(user);
-      setToken(user.token);
-    }
-  }, []);
 
   return (
     <div className="add-blog-wrapper">

@@ -24,13 +24,11 @@ const LoginForm = () => {
       };
 
       const user = await userLogIn(userObject);
-      console.log("++++++USER", user);
 
       if (user) {
         window.localStorage.setItem("user", JSON.stringify(user));
         const token = JSON.parse(localStorage.getItem("user")).token;
         setToken(token);
-        console.log("USER TOKEN", token);
         setUser(user);
 
         setSuccessMessage("User Logged in successfully");

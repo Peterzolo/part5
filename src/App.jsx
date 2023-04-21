@@ -8,7 +8,6 @@ const App = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log("TOKEN", user);
     if (user) {
       setLoggedIn(true);
       setUser(user);
