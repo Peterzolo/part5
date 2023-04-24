@@ -7,7 +7,6 @@ const AddBlog = () => {
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
   const [user, setUser] = useState("");
 
@@ -26,7 +25,6 @@ const AddBlog = () => {
     try {
       const newBlogObject = {
         title: title,
-        author: title,
         url: url,
       };
 
@@ -37,7 +35,6 @@ const AddBlog = () => {
         setTimeout(() => {
           setSuccessMessage(null);
         }, 1000);
-        setAuthor("");
         setTitle("");
         setUrl("");
       } else {
@@ -70,14 +67,6 @@ const AddBlog = () => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Add title here ...."
-        />
-        <input
-          className="add-blog-input"
-          type="text"
-          name="author"
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-          placeholder="Add Author here ...."
         />
         <input
           className="add-blog-input"

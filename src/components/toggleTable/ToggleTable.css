@@ -1,0 +1,14 @@
+.open-btn {
+  border-radius: 20px;
+  padding: 10px;
+  color: white;
+  background-color: green;
+  border: transparent;
+}
+.close-btn {
+  border-radius: 20px;
+  padding: 10px;
+  color: white;
+  background-color: red;
+  border: transparent;
+}

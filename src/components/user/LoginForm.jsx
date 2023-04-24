@@ -27,6 +27,7 @@ const LoginForm = () => {
 
       if (user) {
         window.localStorage.setItem("user", JSON.stringify(user));
+        window.localStorage.setItem("token", JSON.stringify(user.token));
         const token = JSON.parse(localStorage.getItem("user")).token;
         setToken(token);
         setUser(user);

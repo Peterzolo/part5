@@ -15,7 +15,6 @@ export const addBlog = async (blogObject) => {
     };
 
     const response = await axios.post(baseUrl, blogObject, config);
-    console.log("GOT HERE");
 
     return response.data.result;
   } catch (error) {
@@ -42,4 +41,43 @@ export const createBlog = async (blogPostData) => {
 export const getAllBlogs = async () => {
   const response = await axios.get(baseUrl);
   return response.data.result;
+};
+
+export const likePost2 = async (blogId) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("token"));
+    const bearerToken = `Bearer ${token}`;
+    const response = await axios.put(`${baseUrl}/${blogId}/like`, {
+      headers: {
+        Authorization: bearerToken,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log(error?.response?.data);
+  }
+};
+
+export const likePost = async (blogId) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log("USER TOKEN", user);
+  const bearerToken = `Bearer ${user.token}`;
+  console.log("TOKEN", bearerToken);
+
+  try {
+    const response = await axios.put(
+      `${baseUrl}/${blogId}/like`,
+      {},
+      {
+        headers: {
+          Authorization: bearerToken,
+        },
+      }
+    );
+    console.log("RESP", response);
+    return response;
+  } catch (error) {
+    console.log(error?.response?.data);
+  }
 };

@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { getAllBlogs } from "../../services/blog.service";
-import "../blog/Blog.css";
 import AddBlog from "./AddBlog";
+import ToggleTable from "../toggleTable/ToggleTable";
+import BlogDetails from "./BlogDetails";
 
+import "../blog/Blog.css";
 const Blog = ({ user, setLoggedIn }) => {
   const [blogs, setBlogs] = useState([]);
-  const [successMessage, setSuccessMessage] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [selectedBlog, setSelectedBlog] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
       const response = await getAllBlogs();
-
       setBlogs(response);
     }
     fetchData();
@@ -22,6 +22,14 @@ const Blog = ({ user, setLoggedIn }) => {
     setLoggedIn(false);
   };
 
+  const handleToggleDetails = (blog) => {
+    if (selectedBlog && selectedBlog.id === blog.id) {
+      setSelectedBlog(null);
+    } else {
+      setSelectedBlog(blog);
+    }
+  };
+
   return (
     <div className="blog-wrapper">
       <div className="user-logout">
@@ -30,7 +38,9 @@ const Blog = ({ user, setLoggedIn }) => {
           Logout
         </button>
       </div>
-      <AddBlog />
+      <ToggleTable buttonLabel="Create A Blog">
+        <AddBlog />
+      </ToggleTable>
       <h2 className="blog-title">Blog List</h2>
       <div className="blog-list-wrap">
         {blogs &&
@@ -38,12 +48,26 @@ const Blog = ({ user, setLoggedIn }) => {
             <div key={blog.id}>
               <ul className="blog-body">
                 <li className="blog-list">
-                  <h3>{blog.title}</h3>{" "}
+                  <h5>{blog.title}</h5>{" "}
+                  <button
+                    className="detail-btn"
+                    // onClick={() => setSlectedBlog(blog)}
+                    onClick={() => handleToggleDetails(blog)}
+                  >
+                    {/* Show details */}
+
+                    {selectedBlog && selectedBlog.id === blog.id
+                      ? "Hide details"
+                      : "Show details"}
+                  </button>{" "}
                 </li>
               </ul>
             </div>
           ))}
       </div>
+      <ToggleTable buttonLabel={"Show details"}>
+        <BlogDetails selectedBlog={selectedBlog} />
+      </ToggleTable>
     </div>
   );
 };

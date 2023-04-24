@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LoginForm from "./components/user/LoginForm";
 import Blog from "./components/blog/Blog";
+import Togglable from "./components/toggleTable/ToggleTable";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -8,7 +9,6 @@ const App = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log("USER  PARSE", user);
     if (user) {
       setLoggedIn(true);
       setUser(user);
@@ -20,7 +20,9 @@ const App = () => {
       {loggedIn ? (
         <Blog user={user} setLoggedIn={setLoggedIn} />
       ) : (
-        <LoginForm />
+        <Togglable buttonLabel="log in">
+          <LoginForm />
+        </Togglable>
       )}
     </div>
   );
