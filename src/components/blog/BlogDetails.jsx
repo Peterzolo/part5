@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { likePost } from "../../services/blog.service";
 
 const BlogDetails = ({ selectedBlog, onDelete }) => {
+  // eslint-disable-next-line no-unused-vars
   const [likes, setLikes] = useState(0);
 
   const currentUser = JSON.parse(localStorage.getItem("user")).id;
@@ -16,6 +17,7 @@ const BlogDetails = ({ selectedBlog, onDelete }) => {
   const handleDelete = () => {
     onDelete(selectedBlog?.id);
   };
+
   return (
     <div className="container">
       <h4 className="detail-title">Blog Details</h4>

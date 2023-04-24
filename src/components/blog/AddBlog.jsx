@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { addBlog, createBlog, setToken } from "../../services/blog.service";
+import { createBlog, setToken } from "../../services/blog.service";
 import Notification from "../notification/Notification";
 import ErrorNotification from "../notification/ErrorNotification";
 
@@ -8,6 +8,7 @@ const AddBlog = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [user, setUser] = useState("");
 
   useEffect(() => {

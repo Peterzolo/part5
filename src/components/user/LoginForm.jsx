@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Notification from "../notification/Notification";
 import ErrorNotification from "../notification/ErrorNotification";
 
@@ -11,6 +11,7 @@ const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [user, setUser] = useState(null);
 
   const handleSubmit = async (event) => {
