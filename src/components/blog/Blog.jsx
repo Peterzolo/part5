@@ -9,7 +9,6 @@ const Blog = ({ user, setLoggedIn }) => {
   const [blogs, setBlogs] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [sortedBlogs, setSortedBlogs] = useState([]);
-  console.log("SELECTED BLOG", selectedBlog);
 
   useEffect(() => {
     async function fetchData() {
