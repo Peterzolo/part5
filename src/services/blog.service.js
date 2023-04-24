@@ -61,9 +61,7 @@ export const likePost2 = async (blogId) => {
 
 export const likePost = async (blogId) => {
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log("USER TOKEN", user);
   const bearerToken = `Bearer ${user.token}`;
-  console.log("TOKEN", bearerToken);
 
   try {
     const response = await axios.put(
@@ -75,9 +73,23 @@ export const likePost = async (blogId) => {
         },
       }
     );
-    console.log("RESP", response);
+
     return response;
   } catch (error) {
     console.log(error?.response?.data);
   }
+};
+
+export const deleteBlog = async (blogId) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const bearerToken = `Bearer ${user.token}`;
+  console.log("BEARER", bearerToken);
+
+  const response = await axios.delete(`${baseUrl}/delete/${blogId}`, {
+    headers: {
+      Authorization: bearerToken,
+    },
+  });
+  console.log("RES DEL", response);
+  return response;
 };

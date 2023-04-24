@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllBlogs } from "../../services/blog.service";
+import { deleteBlog, getAllBlogs } from "../../services/blog.service";
 import AddBlog from "./AddBlog";
 import ToggleTable from "../toggleTable/ToggleTable";
 import BlogDetails from "./BlogDetails";
@@ -9,6 +9,7 @@ const Blog = ({ user, setLoggedIn }) => {
   const [blogs, setBlogs] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [sortedBlogs, setSortedBlogs] = useState([]);
+  console.log("SELECTED BLOG", selectedBlog);
 
   useEffect(() => {
     async function fetchData() {
@@ -30,6 +31,17 @@ const Blog = ({ user, setLoggedIn }) => {
       setSelectedBlog(null);
     } else {
       setSelectedBlog(blog);
+    }
+  };
+
+  const handleBlogDelete = async () => {
+    try {
+      await deleteBlog(selectedBlog?.id);
+      const updatedBlogs = blogs.filter((blog) => blog.id !== selectedBlog?.id);
+      setBlogs(updatedBlogs);
+      setSelectedBlog(null); // deselect the deleted blog
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -69,7 +81,7 @@ const Blog = ({ user, setLoggedIn }) => {
           ))}
       </div>
       <ToggleTable buttonLabel={"Show details"}>
-        <BlogDetails selectedBlog={selectedBlog} />
+        <BlogDetails selectedBlog={selectedBlog} onDelete={handleBlogDelete} />
       </ToggleTable>
     </div>
   );

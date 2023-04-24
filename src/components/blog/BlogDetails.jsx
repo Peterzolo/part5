@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { likePost } from "../../services/blog.service";
 
-const BlogDetails = ({ selectedBlog }) => {
+const BlogDetails = ({ selectedBlog, onDelete }) => {
   const [likes, setLikes] = useState(0);
 
-  console.log("LIKES", likes);
+  const currentUser = JSON.parse(localStorage.getItem("user")).id;
 
   const handleBlogLike = async () => {
     const response = await likePost(selectedBlog.id);
     setLikes(response?.data?.likes);
+  };
+
+  const disabledBtn = selectedBlog?.userId.id !== currentUser;
+
+  const handleDelete = () => {
+    onDelete(selectedBlog?.id);
   };
   return (
     <div className="container">
@@ -34,6 +40,13 @@ const BlogDetails = ({ selectedBlog }) => {
           </button>
         </div>
       </div>
+      <button
+        disabled={disabledBtn}
+        className={disabledBtn ? "disabled-btn" : "delete-btn"}
+        onClick={handleDelete}
+      >
+        Delete
+      </button>
     </div>
   );
 };
