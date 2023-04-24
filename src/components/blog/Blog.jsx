@@ -8,11 +8,14 @@ import "../blog/Blog.css";
 const Blog = ({ user, setLoggedIn }) => {
   const [blogs, setBlogs] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
+  const [sortedBlogs, setSortedBlogs] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       const response = await getAllBlogs();
       setBlogs(response);
+      const sortedResponse = [...response].sort((a, b) => b.likes - a.likes);
+      setSortedBlogs(sortedResponse);
     }
     fetchData();
   }, []);
@@ -43,8 +46,8 @@ const Blog = ({ user, setLoggedIn }) => {
       </ToggleTable>
       <h2 className="blog-title">Blog List</h2>
       <div className="blog-list-wrap">
-        {blogs &&
-          blogs.map((blog) => (
+        {sortedBlogs &&
+          sortedBlogs.map((blog) => (
             <div key={blog.id}>
               <ul className="blog-body">
                 <li className="blog-list">
