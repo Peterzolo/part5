@@ -66,7 +66,9 @@ describe("AddBlog", () => {
     const urlInput = getByPlaceholderText("Add Url here ....");
     const addButton = getByText("Add");
 
-    fireEvent.change(titleInput, { target: { value: "Test Blog" } });
+    fireEvent.change(titleInput, {
+      target: { value: "Digital Marketing Business" },
+    });
     fireEvent.change(urlInput, {
       target: {
         value:
@@ -76,7 +78,39 @@ describe("AddBlog", () => {
     fireEvent.click(addButton);
 
     expect(createBlogMock).toHaveBeenCalledWith({
-      title: "Test Blog",
+      title: "Digital Marketing Business",
+      url: "https://media.istockphoto.com/id/497610338/photo/sunbird-in-africa.j.com",
+    });
+  });
+});
+
+describe("AddBlog component", () => {
+  test("calls handleSubmit function with correct input values when a new blog is created", async () => {
+    const handleSubmit = jest.fn();
+    render(<AddBlog onSubmit={handleSubmit} />);
+
+    const titleInput = screen.getByPlaceholderText(
+      "https://media.istockphoto.com/id/497610338/photo/sunbird-in-africa.j.com"
+    );
+    const urlInput = screen.getByPlaceholderText(
+      "https://media.istockphoto.com/id/497610338/photo/sunbird-in-africa.j.com"
+    );
+    const addButton = screen.getByRole("button", { name: "Add" });
+
+    fireEvent.change(titleInput, {
+      target: { value: "Digital Marketing Business" },
+    });
+    fireEvent.change(urlInput, {
+      target: {
+        value:
+          "https://media.istockphoto.com/id/497610338/photo/sunbird-in-africa.j.com",
+      },
+    });
+    fireEvent.click(addButton);
+
+    expect(handleSubmit).toHaveBeenCalledTimes(1);
+    expect(handleSubmit).toHaveBeenCalledWith({
+      title: "Digital Marketing Business",
       url: "https://media.istockphoto.com/id/497610338/photo/sunbird-in-africa.j.com",
     });
   });
