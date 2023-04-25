@@ -67,12 +67,17 @@ describe("AddBlog", () => {
     const addButton = getByText("Add");
 
     fireEvent.change(titleInput, { target: { value: "Test Blog" } });
-    fireEvent.change(urlInput, { target: { value: "http://testblog.com" } });
+    fireEvent.change(urlInput, {
+      target: {
+        value:
+          "https://media.istockphoto.com/id/497610338/photo/sunbird-in-africa.j.com",
+      },
+    });
     fireEvent.click(addButton);
 
     expect(createBlogMock).toHaveBeenCalledWith({
       title: "Test Blog",
-      url: "http://testblog.com",
+      url: "https://media.istockphoto.com/id/497610338/photo/sunbird-in-africa.j.com",
     });
   });
 });
